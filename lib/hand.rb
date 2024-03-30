@@ -1,4 +1,4 @@
-require 'deck'
+require_relative 'deck'
 
 class Hand
   attr_reader :cards
@@ -52,7 +52,10 @@ class Hand
 
   def straight?
     values = card_values.map { |value| Deck::VALUES.index(value) }
-    values.max - values.min == 4 && values.uniq.length == 5
+    values.sort!
+    return true if values == [0, 1, 2, 3, 12] # Ace-high straight (A, 2, 3, 4, 5)
+    (0..3).each { |i| return false unless values[i + 1] == values[i] + 1 }
+    true
   end
 
   def three_of_a_kind?

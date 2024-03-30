@@ -1,5 +1,4 @@
 require '../lib/deck'
-require '../lib/card'
 
 RSpec.describe Deck do
   describe '#initialize' do
