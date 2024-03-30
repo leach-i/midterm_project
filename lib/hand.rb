@@ -1,4 +1,4 @@
-require_relative 'deck'
+require 'deck'
 
 class Hand
   attr_reader :cards

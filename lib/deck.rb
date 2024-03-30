@@ -17,6 +17,7 @@ class Deck
         deck << Card.new(suit, value)
       end
     end
+    deck
   end
 
   def shuffle
@@ -24,6 +25,8 @@ class Deck
   end
 
   def deal(num_cards)
-    @cards.pop(num_cards)
+    dealt_cards = @cards.pop(num_cards)
+    @cards = @cards - dealt_cards
+    dealt_cards
   end
 end
