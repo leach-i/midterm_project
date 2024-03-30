@@ -25,6 +25,8 @@ class Deck
   end
 
   def deal(num_cards)
-    @cards.slice!(0, num_cards)
+    remaining_cards = @cards.length
+    cards_to_deal = [num_cards, remaining_cards].min
+    @cards.slice!(0, cards_to_deal)
   end
 end
