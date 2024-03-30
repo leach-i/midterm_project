@@ -25,8 +25,6 @@ class Deck
   end
 
   def deal(num_cards)
-    dealt_cards = @cards.pop(num_cards)
-    @cards = @cards - dealt_cards
-    dealt_cards
+    @cards.slice!(0, num_cards)
   end
 end

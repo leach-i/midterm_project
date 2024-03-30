@@ -22,20 +22,26 @@ RSpec.describe Player do
   end
 
   describe "#discard" do
-    it "removes specified cards from the player's hand and replaces them" do
-      cards_to_discard = [0, 1]
-      new_cards = [Card.new('Hearts', 'King'), Card.new('Diamonds', '10')]  # Example replacement cards
-      allow(deck).to receive(:deal).with(cards_to_discard.length).and_return(new_cards)
-      player.receive_hand(hand)
-      player.discard(*cards_to_discard, deck)
-      expect(player.hand.cards).not_to eq(hand.cards)
+    context "when the player has a hand" do
+      let(:dealt_cards) { [Card.new('Hearts', 'Ace'), Card.new('Diamonds', '10'), Card.new('Clubs', '8')] }
+
+      before do
+        allow(hand).to receive(:cards).and_return(dealt_cards)
+        player.receive_hand(hand)
+      end
+
+      it "removes specified cards from the player's hand" do
+        player.discard(0, 2)
+        expect(player.hand.cards.size).to eq(1)
+      end
     end
 
-    it "does nothing if the player has no hand" do
-      expect { player.discard(0, 1, deck) }.not_to raise_error
+    context "when the player has no hand" do
+      it "does nothing" do
+        expect { player.discard(0, 1, 2) }.not_to raise_error
+      end
     end
   end
-
 
   describe "#fold" do
     it "sets the player's hand to nil" do

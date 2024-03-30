@@ -1,3 +1,5 @@
+require_relative 'hand'
+
 class Player
   attr_reader :name, :chips, :hand
 
@@ -10,14 +12,10 @@ class Player
     @hand = hand
   end
 
-  def discard(*indices, deck)
+  def discard(*card_indices)
     return unless @hand
 
-    cards_to_discard = indices.map { |index| @hand.cards[index] }
-    new_cards = deck.deal(cards_to_discard.length)
-
-    cards_to_discard.each { |card| @hand.cards.delete(card) }
-    @hand.cards.concat(new_cards)
+    card_indices.flatten.sort.reverse_each { |index| @hand.cards.delete_at(index) }
   end
 
   def fold
